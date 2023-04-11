@@ -54,7 +54,7 @@
 			</div>
 			<ul class="tab-bar">
 				<li>影片</li>
-				<li>影院</li>
+				<li @click="h_request">影院</li>
 				<li>排片</li>
 				<li>我的</li>
 			</ul>
@@ -83,6 +83,11 @@
 					var date = d.getDate();
 					//拼接
 					return year+"年"+month+"月"+date+"日";
+				}
+			},
+			methods:{
+				h_request(){
+					window.location.href="cinema.html"
 				}
 			}
 		})
