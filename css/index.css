@@ -1,0 +1,199 @@
+@charset "utf-8";
+
+.movie-type {
+	/* 弹性盒子，里面的元素默认横排 */
+	display: flex;
+	height: 45px;
+	border-bottom: 1px solid #E1E1E1;
+	font-size: 14px;
+}
+
+.movie-type li {
+	height: 100%;
+	padding: 0px 15px;
+	/* 弹性盒子 */
+	display: flex;
+	/* 副轴（垂直）居中 */
+	align-items: center;
+	color: #666666;
+}
+
+.movie-type li.active {
+	font-weight: bold;
+	font-size: 16px;
+	color: black;
+	/* 相对定位 */
+	position: relative;
+}
+
+.movie-type li.active::after {
+	content: "";
+	display: block;
+	width: 20px;
+	height: 2px;
+	background-color: var(--primaryColor);
+	/* 子绝父相 */
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	margin: auto;
+}
+
+.nice-movie-box {
+	padding: 15px;
+}
+
+.nice-movie-title {
+	font-size: 12px;
+	color: #666666;
+}
+/* 最受好评列表 */
+.nice-movie-list {
+	margin-top: 15px;
+	/* 弹性盒子，里面的元素默认横排 */
+	display: flex;
+	overflow: auto;
+}
+/* PC端 */
+/* 设置滚动条 */
+.nice-movie-list::-webkit-scrollbar{
+	height: 5px;
+	background-color: #e1e1e1;
+	border-radius: 5px;
+}
+/* 内滚动条 */
+.nice-movie-list::-webkit-scrollbar-thumb{
+	background-image: linear-gradient(to right,#4791FF,#01bb84);
+	border-radius: 5px;
+}
+/* 响应式代码 移动端去掉滚动条 */
+@media only screen and (max-width:375px){
+	::-webkit-scrollbar{
+		display: none;
+	}
+}
+.nice-movie-list li {
+	width: 85px;
+	/* 不压缩当前的元素 */
+	flex-shrink: 0;
+}
+
+/* 排除第1个li，后面所有的li都要margin-left:5px */
+/*
+			.nice-movie-list li+li{
+				margin-left: 5px;
+			}
+			*/
+.nice-movie-list li:not(:first-child) {
+	margin-left: 5px;
+}
+
+.movie-img-box {
+	height: 114px;
+	/* 相对定位 */
+	position: relative;
+}
+
+.movie-name {
+	font-size: 12px;
+	font-weight: bold;
+	padding: 5px 0;
+	/* 单行文本溢出省略技术 */
+	/* 第一步：让文字不换行 */
+	white-space: nowrap;
+	/* 第二步：超出部分隐藏 */
+	overflow: hidden;
+	/* 第三步：如果文字超出盒子 添加省略号 */
+	text-overflow: ellipsis;
+}
+
+.movie-img {
+	width: 100%;
+	height: 100%;
+}
+
+.movie-score {
+	/* 子绝父相，绝对定位 */
+	position: absolute;
+	left: 2px;
+	bottom: 2px;
+	font-weight: bold;
+	font-size: 12px;
+	color: #FF9E21;
+}
+
+.movie-list {
+
+	padding: 15px;
+	/* 阴影 */
+
+	box-shadow: 0px -5px 0px 0px #E1E1E1;
+	margin-top: 5px;
+
+}
+
+.movie-item {
+
+	display: flex;
+}
+
+/* 排除第一个Movie-item */
+.movie-list .movie-item:not(:first-child) {
+	margin-top: 10px;
+}
+
+.movie-img-left {
+	width: 60px;
+	height: 80px;
+}
+
+.movie-info-center {
+
+	/* 弹性盒子沾满剩余空间 */
+	flex: 1;
+	font-size: 12px;
+	/* 弹性盒子 */
+	display: flex;
+	flex-direction: column;
+	/* 主轴(垂直)分散对齐 */
+	justify-content: space-between;
+	padding: 5px;
+}
+
+.movie-name-center {
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.box-btn-right {
+
+	width: 60px;
+	display: flex;
+	/* 主轴居中 */
+	justify-content: center;
+	/* 副轴居中 */
+	align-items: center;
+}
+
+/* 购票按钮 */
+.btn-buyticket {
+	width: 45px;
+	height: 19px;
+	font-size: 12px;
+	border: none;
+	background-color: var(--primaryColor);
+	color: white;
+	/* 圆角边框 border-radius */
+	border-radius: 10px;
+
+
+}
+
+/* 评分的数字 */
+.movie-score-center span {
+	font-size: 14px;
+	font-weight: bold;
+	color: var(--tagColor);
+}
+/* 黄天次 */

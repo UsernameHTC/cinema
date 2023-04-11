@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>影厅</title>
+		<link rel="stylesheet" href="./css/comm.css">
+		<link rel="stylesheet" href="css/index.css" />
+		<style>
+			.cinema-item {
+				border-bottom: 1px solid #e1e1e1;
+				padding: 5px 0;
+			}
+
+			.cinema-name {
+				font-weight: bold;
+				font-size: 14px;
+			}
+
+			.cinema-address {
+				font-size: 12px;
+				color: #333333;
+				margin: 5px 0;
+			}
+
+			.tag-list {
+				font-size: 12px;
+				/* 变换 */
+				transform: scale(0.9);
+				/* 沿着左边缩放 */
+				transform-origin: left;
+			}
+
+			.tag-list span {
+				//内边距
+				padding: 0px 5px;
+			}
+
+			/* 奇数项 */
+			.tag-list span:nth-child(odd) {
+				color: var(--tagColor);
+				/* currentColor 系统变量 指针变量 指向当前color*/
+				border: 1px solid currentColor;
+			}
+
+			/* 偶数项 */
+			.tag-list span:nth-child(even) {
+				color: var(--successColor);
+				border: 1px solid currentColor;
+			}
+
+			.cinema-list {
+				padding: 0px 15px;
+			}
+			.refresh-img{
+				width: 24px;
+				height: 24px;
+				position: fixed;
+				right: 15px;
+				bottom: 70px;
+				box-shadow: 0px 0px 15px 5px var(--primaryColor);
+				border-radius: 50%;
+			}
+			.loading-box{
+				
+				font-size: 14px;
+				/* 弹性盒子 */
+				display:flex;
+				/* 主轴 */
+				justify-content: center;
+				/* 副轴 */
+				align-items: center;
+				padding: 5px;
+			}
+			.loading-box img{
+				margin-right: 5px;
+			}
+			.loading-box span{
+				/* to right/left 颜色color从左/右开始 */
+				/* 线性渐变 */
+				background-image: linear-gradient(45deg,red,blue,gold,deeppink);
+				/* 背景不要重复平铺 */
+				background-repeat: no-repeat;
+				/* 使用定义的动画 */
+				background-size: 200% 100%;
+				animation-name: loading-ani;
+				/* 动画执行时间 */
+				animation-duration: 2s;
+				/* 动画一直执行 */
+				animation-iteration-count: infinite;
+				/* 动画匀速进行 */
+				animation-timing-function: linear;
+				/* 神来之笔 */
+				color: transparent;
+				-webkit-background-clip: text;
+				font-weight: bold;
+			}
+			/* 定义一个css动画 */
+			@keyframes loading-ani{
+				from{
+					background-position-x:0%;
+				}to{background-position-x:100%;}
+			}
+		</style>
+
+	</head>
+	<body>
+		<div id="app">
+			<img @click="getCinemaList" src="img/refresh.png" alt="" class="refresh-img"/>
+			<div class="nav-bar">影厅</div>
+			<div class="content-box cinema-list">
+				<!-- 加载动画 -->
+				
+				<div class="loading-box" v-show="isLoading">
+					<img src="img/loading.gif" alt=""/>
+					<span>正在加载中···</span>
+				</div>
+				<div class="cinema-item" v-for="(item,index) in cinemaList">
+					<p class="cinema-name">{{item.hall_name}}</p>
+					<p class="cinema-address">{{item.address}}</p>
+					<div class="tag-list">
+						<!-- split函数 分割 -->
+						<span v-for="(item2,index)	 in item.tags.split(',')">{{item2}}</span>
+					</div>
+				</div>
+
+
+			</div>
+			<ul class="tab-bar">
+				<li>影片</li>
+				<li>影院</li>
+				<li>排片</li>
+				<li>我的</li>
+			</ul>
+		</div>
+	</body>
+	<script src="./js/vue.js"></script>
+	<script src="./js/axios.js"></script>
+
+	<script>
+		new Vue({
+			el: "#app",
+			data: {
+				cinemaList:[],
+				isLoading:true
+
+			},
+			methods:{
+				//获取影厅列表
+				getCinemaList: async function(){
+					// 获取数据之前 显示加载动画
+					this.isLoading= true;
+					
+					//1.准备要请求的地址
+					var url="http://www.softeem.xin:9999/hall-info/getAllList";
+					//2.使用axios发起Get请求,ajax是异步请求
+					await axios.get(url);//await和async 一起使用
+					var response = await axios.get(url);
+					//3.打印response结果
+					console.log(response.data.data);
+					//将数据保存起来
+					this.cinemaList = response.data.data;
+					// 数据获取完成后，影藏加载动画
+					this.isLoading=false;
+					}
+				},
+				//生命周期函数,在vue创建时候执行
+				created:function(){
+					this.getCinemaList();
+				}
+				
+			
+			
+
+		});
+	</script>
+</html>
+
+<!-- 接口  https://console-docs.apipost.cn/preview/6eb6e5c405240b38/8aced553ba01c006 -->
