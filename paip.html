@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>排片</title>
+		<link rel="stylesheet" href="./css/comm.css">
+		<link rel="stylesheet" href="css/index.css" />
+		<style>
+			.cinema-item {
+				border-bottom: 1px solid #e1e1e1;
+				padding: 5px 0;
+			}
+
+			.cinema-name {
+				font-weight: bold;
+				font-size: 14px;
+			}
+
+			.cinema-address {
+				font-size: 12px;
+				color: #333333;
+				margin: 5px 0;
+			}
+
+			.tag-list {
+				font-size: 12px;
+				/* 变换 */
+				transform: scale(0.9);
+				/* 沿着左边缩放 */
+				transform-origin: left;
+			}
+
+			.tag-list span {
+				//内边距
+				padding: 0px 5px;
+			}
+
+			/* 奇数项 */
+			.tag-list span:nth-child(odd) {
+				color: var(--tagColor);
+				/* currentColor 系统变量 指针变量 指向当前color*/
+				border: 1px solid currentColor;
+			}
+
+			/* 偶数项 */
+			.tag-list span:nth-child(even) {
+				color: var(--successColor);
+				border: 1px solid currentColor;
+			}
+
+			.cinema-list {
+				padding: 0px 15px;
+			}
+			.refresh-img{
+				width: 24px;
+				height: 24px;
+				position: fixed;
+				right: 15px;
+				bottom: 70px;
+				box-shadow: 0px 0px 15px 5px var(--primaryColor);
+				border-radius: 50%;
+			}
+			.loading-box{
+				
+				font-size: 14px;
+				/* 弹性盒子 */
+				display:flex;
+				/* 主轴 */
+				justify-content: center;
+				/* 副轴 */
+				align-items: center;
+				padding: 5px;
+			}
+			.loading-box img{
+				margin-right: 5px;
+			}
+			.loading-box span{
+				/* to right/left 颜色color从左/右开始 */
+				/* 线性渐变 */
+				background-image: linear-gradient(45deg,red,blue,gold,deeppink);
+				/* 背景不要重复平铺 */
+				background-repeat: no-repeat;
+				/* 使用定义的动画 */
+				background-size: 200% 100%;
+				animation-name: loading-ani;
+				/* 动画执行时间 */
+				animation-duration: 2s;
+				/* 动画一直执行 */
+				animation-iteration-count: infinite;
+				/* 动画匀速进行 */
+				animation-timing-function: linear;
+				/* 神来之笔 */
+				color: transparent;
+				-webkit-background-clip: text;
+				font-weight: bold;
+				
+			}
+			/* 定义一个css动画 */
+			@keyframes loading-ani{
+				from{
+					background-position-x:0%;
+				}to{background-position-x:100%;}
+			}
+		</style>
+
+	</head>
+	<body>
+		<div id="app">
+			
+			<div class="nav-bar">排片</div>
+			<div class="content-box">
+				
+				<div class="loading-box" >
+					<img src="img/loading.gif" alt=""/>
+					<span>宝贝我正在开发中你别急···</span>
+				</div>
+
+
+			</div>
+			<ul class="tab-bar">
+				<li @click="h_cinema">影片</li>
+				<li @click="h_request">影院</li>
+				<li>排片</li>
+				<li @click="heart">我的</li>
+			</ul>
+		</div>
+	</body>
+	<script src="./js/vue.js"></script>
+	<script src="./js/axios.js"></script>
+
+	<script>
+		new Vue({
+			el: "#app",
+			data: {
+			},
+			methods:{
+				//获取影厅列表
+				
+					h_cinema(){
+						window.location.href="index.html"
+					},
+					heart(){
+						window.location.href="heart.html"
+					},
+					h_request(){
+						window.location.href="cinema.html"
+					}
+				}
+				
+				
+				
+			
+			
+
+		});
+	</script>
+</html>
+
+<!-- 接口  https://console-docs.apipost.cn/preview/6eb6e5c405240b38/8aced553ba01c006 -->
