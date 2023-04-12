@@ -4,7 +4,7 @@
 		<meta charset="UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>影厅</title>
+		<title>影院</title>
 		<link rel="stylesheet" href="./css/comm.css">
 		<link rel="stylesheet" href="css/index.css" />
 		<style>
@@ -53,7 +53,8 @@
 			.cinema-list {
 				padding: 0px 15px;
 			}
-			.refresh-img{
+
+			.refresh-img {
 				width: 24px;
 				height: 24px;
 				position: fixed;
@@ -62,24 +63,27 @@
 				box-shadow: 0px 0px 15px 5px var(--primaryColor);
 				border-radius: 50%;
 			}
-			.loading-box{
-				
+
+			.loading-box {
+
 				font-size: 14px;
 				/* 弹性盒子 */
-				display:flex;
+				display: flex;
 				/* 主轴 */
 				justify-content: center;
 				/* 副轴 */
 				align-items: center;
 				padding: 5px;
 			}
-			.loading-box img{
+
+			.loading-box img {
 				margin-right: 5px;
 			}
-			.loading-box span{
+
+			.loading-box span {
 				/* to right/left 颜色color从左/右开始 */
 				/* 线性渐变 */
-				background-image: linear-gradient(45deg,red,blue,gold,deeppink);
+				background-image: linear-gradient(45deg, red, blue, gold, deeppink);
 				/* 背景不要重复平铺 */
 				background-repeat: no-repeat;
 				/* 使用定义的动画 */
@@ -96,24 +100,29 @@
 				-webkit-background-clip: text;
 				font-weight: bold;
 			}
+
 			/* 定义一个css动画 */
-			@keyframes loading-ani{
-				from{
-					background-position-x:0%;
-				}to{background-position-x:100%;}
+			@keyframes loading-ani {
+				from {
+					background-position-x: 0%;
+				}
+
+				to {
+					background-position-x: 100%;
+				}
 			}
 		</style>
 
 	</head>
 	<body>
 		<div id="app">
-			<img @click="getCinemaList" src="img/refresh.png" alt="" class="refresh-img"/>
-			<div class="nav-bar">影厅</div>
+			<img @click="getCinemaList" src="img/refresh.png" alt="" class="refresh-img" />
+			<div class="nav-bar">影院</div>
 			<div class="content-box cinema-list">
 				<!-- 加载动画 -->
-				
+
 				<div class="loading-box" v-show="isLoading">
-					<img src="img/loading.gif" alt=""/>
+					<img src="img/loading.gif" alt="" />
 					<span>正在加载中···</span>
 				</div>
 				<div class="cinema-item" v-for="(item,index) in cinemaList">
@@ -128,10 +137,10 @@
 
 			</div>
 			<ul class="tab-bar">
-				<li>影片</li>
+				<li @click="h_cinema">影片</li>
 				<li>影院</li>
-				<li>排片</li>
-				<li>我的</li>
+				<li @click="paip">排片</li>
+				<li @click="heart">我的</li>
 			</ul>
 		</div>
 	</body>
@@ -142,39 +151,48 @@
 		new Vue({
 			el: "#app",
 			data: {
-				cinemaList:[],
-				isLoading:true
+				cinemaList: [],
+				isLoading: true
 
 			},
-			methods:{
+			methods: {
 				//获取影厅列表
-				getCinemaList: async function(){
+				getCinemaList: async function() {
 					// 获取数据之前 显示加载动画
-					this.isLoading= true;
-					
+					this.isLoading = true;
+
 					//1.准备要请求的地址
-					var url="http://www.softeem.xin:9999/hall-info/getAllList";
+					var url = "http://www.softeem.xin:9999/hall-info/getAllList";
 					//2.使用axios发起Get请求,ajax是异步请求
-					await axios.get(url);//await和async 一起使用
+					await axios.get(url); //await和async 一起使用
 					var response = await axios.get(url);
 					//3.打印response结果
 					console.log(response.data.data);
 					//将数据保存起来
 					this.cinemaList = response.data.data;
 					// 数据获取完成后，影藏加载动画
-					this.isLoading=false;
-					}
+					this.isLoading = false;
 				},
-				//生命周期函数,在vue创建时候执行
-				created:function(){
-					this.getCinemaList();
+				h_cinema() {
+					window.location.href = "index.html"
+				},
+				heart() {
+					window.location.href = "heart.html"
+				},
+				paip() {
+					window.location.href = "paip.html"
 				}
-				
-			
-			
+			},
+			//生命周期函数,在vue创建时候执行
+			created: function() {
+				this.getCinemaList();
+			}
+
+
+
 
 		});
 	</script>
 </html>
 
-<!-- 接口  https://console-docs.apipost.cn/preview/6eb6e5c405240b38/8aced553ba01c006 -->
+
