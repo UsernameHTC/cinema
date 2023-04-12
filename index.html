@@ -55,8 +55,8 @@
 			<ul class="tab-bar">
 				<li>影片</li>
 				<li @click="h_request">影院</li>
-				<li>排片</li>
-				<li>我的</li>
+				<li @click="paip">排片</li>
+				<li @click="heart">我的</li>
 			</ul>
 		</div>
 	</body>
@@ -73,21 +73,27 @@
 				movieData: movieData.data.listData
 			},
 			//定义过滤器
-			filters:{
+			filters: {
 				//格式化日期的过滤器
-				formatDate:function(value){
+				formatDate: function(value) {
 					//vaule 日期 publicTime
 					var d = new Date(value);
 					var year = d.getFullYear();
-					var month = d.getMonth()+1;
+					var month = d.getMonth() + 1;
 					var date = d.getDate();
 					//拼接
-					return year+"年"+month+"月"+date+"日";
+					return year + "年" + month + "月" + date + "日";
 				}
 			},
-			methods:{
-				h_request(){
-					window.location.href="cinema.html"
+			methods: {
+				h_request() {
+					window.location.href = "cinema.html"
+				},
+				heart() {
+					window.location.href = "heart.html"
+				},
+				paip() {
+					window.location.href = "paip.html"
 				}
 			}
 		})
